@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Button from './Button';
 import clsx from 'clsx';
 
@@ -11,6 +11,9 @@ interface SlotMachineData {
 const SlotMachineGame = () => {
     const [selectedMachine, setSelectedMachine] = useState<SlotMachineData | null>(null);
     const [currentBet, setCurrentBet] = useState<number | null>(null);
+    const [isSpinning, setIsSpinning] = useState(false);
+
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
 
     useEffect(() => {
@@ -27,6 +30,8 @@ const SlotMachineGame = () => {
         return () => window.removeEventListener('message', handleMessage);
     }, []);
 
+    const handleSpin = () => {}
+
 
     return (
         <div className='container g7 min-h-[420px] p-2'>
@@ -38,9 +43,19 @@ const SlotMachineGame = () => {
             <p className='max-[570px]:hidden'>
               Bet range: ${selectedMachine.betAmounts[0]} - {selectedMachine.betAmounts[selectedMachine.betAmounts.length - 1]}
             </p>
+            <video
+              ref={videoRef}
+              src="/src/assets/slot-machine-175.webm"
+              className='max-[460px]:w-[100%] w-[70%]'
+              muted
+            />
+            {/* <div className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
+              {resultMessage}
+            </div> */}
           </div>
 
           <div className='md:text-xl'>
+            {/* Кнопки для выбора ставки */}
               <p>Please select your bet:</p>
             <div className='max-w-96 max-[695px]:max-w-60 grid grid-cols-4 gap-4 max-[695px]:grid-cols-2 max-[695px]:gap-2 my-4'>
               {selectedMachine.betAmounts.map((bet, i) => (
@@ -56,6 +71,14 @@ const SlotMachineGame = () => {
                 </Button>
               ))}
             </div>
+
+            {/* Spin button */}
+            <Button onClick={handleSpin}  disabled={isSpinning || currentBet === null}>
+              Spin
+            </Button>
+
+            {/* Message about rezult of spin */}
+            {/* {resultMessage && <div className={clsx('caption !leading-7 text-2xl mt-10 max-[570px]:hidden')}>{resultMessage}</div>} */}
           </div>
         </div>
       ) : (
