@@ -32,9 +32,25 @@ const SlotMachineList = () => {
     
 
 
-  return (
-    <div>SlotMachineList</div>
-  )
+    return (
+        <div className='flex flex-col gap-4 p-2'>
+            <div className='flex justify-center gap-8 rounded-bl-lg rounded-br-lg'>
+                {slotMachines.map((item) => (
+                    <div
+                        key={item.machine.id}
+                        // onClick={() => handleSelectMachine(item)}
+                        className='relative'
+                    >
+                        <img src="/src/assets/slot.png" width={200} className='cursor-pointer' alt={item.machine.name} />
+                        <p className='slot-id'>{item.machine.id}</p>
+                        <p className='slot-bet-range'>Bet range: {item.betAmounts[0]}-{item.betAmounts[item.betAmounts.length - 1]}</p> 
+                        <p className='slot-name'>{item.machine.name}</p>
+                    </div>
+                ))}
+            </div>
+            <div className='h4 max-sm:h5 text-center'>Balance: ${userBalance}</div>
+        </div>
+    );
 }
 
 export default SlotMachineList
