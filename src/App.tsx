@@ -1,5 +1,6 @@
 import React from 'react';
 import SlotMachineList from './components/SlotMachineList';
+import SlotMachineGame from './components/SlotMachineGame';
 
 const App: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const App: React.FC = () => {
         <SlotMachineList />
       </div>
       <div>
-        {/* <SelectedGame /> */}
+        <SlotMachineGame />
       </div>
     </div>
   );
