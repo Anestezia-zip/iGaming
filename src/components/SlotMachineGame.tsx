@@ -13,6 +13,7 @@ const SlotMachineGame = () => {
     const [currentBet, setCurrentBet] = useState<number | null>(null);
     const [isSpinning, setIsSpinning] = useState(false);
     const [resultMessage, setResultMessage] = useState<string | null>(null);
+    const [userBalance, setUserBalance] = useState(100);
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -32,6 +33,15 @@ const SlotMachineGame = () => {
     }, []);
 
     const handleSpin = () => {
+          if (currentBet! > userBalance) {
+            setResultMessage('Insufficient balance for this bet');
+            return;
+          }
+          if (!selectedMachine) {
+            setResultMessage('No slot machine selected');
+            return;
+          }
+
         setIsSpinning(true);  // Video of spinning slot
         if (videoRef.current) {
             videoRef.current.playbackRate = 1.75;
