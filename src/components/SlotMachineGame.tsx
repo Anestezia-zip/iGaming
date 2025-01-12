@@ -14,6 +14,8 @@ const SlotMachineGame = () => {
         const handleMessage = (event: MessageEvent) => {
             if (event.data.type === 'SELECT_MACHINE') {
                 setSelectedMachine(event.data.data);
+                // setCurrentBet(null); // Сбрасываем текущую ставку
+                // setResultMessage(null); // Очищаем прошлый результат
             }
         };
 

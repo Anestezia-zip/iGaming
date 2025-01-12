@@ -184,3 +184,7 @@
     @apply absolute w-[136px] max-[550px]:w-[100px] bottom-10 left-1/2 -translate-x-1/2 text-base max-[550px]:text-xs p-3 max-[550px]:p-1 border-2 border-p3 cursor-pointer font-bold g10 text-black shadow-400;
   }
   /* END of Slots */
+
+  .animate-pulse-fast {
+    animation: pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
