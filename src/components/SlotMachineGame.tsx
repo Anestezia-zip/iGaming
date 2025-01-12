@@ -12,6 +12,7 @@ const SlotMachineGame = () => {
     const [selectedMachine, setSelectedMachine] = useState<SlotMachineData | null>(null);
     const [currentBet, setCurrentBet] = useState<number | null>(null);
     const [isSpinning, setIsSpinning] = useState(false);
+    const [resultMessage, setResultMessage] = useState<string | null>(null);
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -49,9 +50,9 @@ const SlotMachineGame = () => {
               className='max-[460px]:w-[100%] w-[70%]'
               muted
             />
-            {/* <div className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
+            <div className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
               {resultMessage}
-            </div> */}
+            </div>
           </div>
 
           <div className='md:text-xl'>
@@ -77,8 +78,8 @@ const SlotMachineGame = () => {
               Spin
             </Button>
 
-            {/* Message about rezult of spin */}
-            {/* {resultMessage && <div className={clsx('caption !leading-7 text-2xl mt-10 max-[570px]:hidden')}>{resultMessage}</div>} */}
+            {/* Message about result of spin */}
+            {resultMessage && <div className={clsx('caption !leading-7 text-2xl mt-10 max-[570px]:hidden')}>{resultMessage}</div>}
           </div>
         </div>
       ) : (
