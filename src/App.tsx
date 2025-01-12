@@ -1,10 +1,11 @@
 import React from 'react';
+import SlotMachineList from './components/SlotMachineList';
 
 const App: React.FC = () => {
   return (
     <div className='flex flex-col gap-3'>
       <div>
-        {/* <SlotMachineList /> */}
+        <SlotMachineList />
       </div>
       <div>
         {/* <SelectedGame /> */}
