@@ -9,7 +9,7 @@ type SlotMachineData = {
 
 const SlotMachineList = () => {
     const [slotMachines, setSlotMachines] = useState<SlotMachineData[]>([]);
-    const [selectedSlotMachine, setSelectedSlotMachine] = useState<SlotMachineData | null>(null);
+    const [, setSelectedSlotMachine] = useState<SlotMachineData | null>(null);
     const [userBalance, setUserBalance] = useState(100);
 
     // State of loading data and error state
@@ -73,7 +73,7 @@ const SlotMachineList = () => {
     };
 
     if (error) {
-        return <div className="text-center md:text-2xl p-8">
+        return <div  aria-live="assertive" className="text-center md:text-2xl p-8">
             <div className='text-red-500 mb-6'>{error}</div>
             <div className='h4 max-sm:h5 text-center'>Balance: ${userBalance}</div>
         </div>;
@@ -104,16 +104,19 @@ const SlotMachineList = () => {
                 <div className='flex flex-col gap-4 p-2'>
                     <div className='flex justify-center gap-8 rounded-bl-lg rounded-br-lg'>
                         {slotMachines.length === 0 ? (
-                            <div className='text-center md:text-2xl text-red-500 p-8'>No slot machines available</div>
+                            <div role="alert" className="text-center md:text-2xl text-red-500 p-8">No slot machines available</div>
                         ) : (
                             <>
                                 {slotMachines.map((item) => (
                                     <div
+                                        role='button'
+                                        tabIndex={0}
                                         key={item.machine.id}
                                         onClick={() => handleSelectMachine(item)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleSelectMachine(item)}
                                         className='relative'
                                     >
-                                        <img src="/src/assets/slot.png" width={200} className='cursor-pointer' alt={item.machine.name} />
+                                        <img src="/src/assets/slot.png" width={200} className='cursor-pointer' alt={`Slot machine: ${item.machine.name}, Bet range: ${item.betAmounts[0]}-${item.betAmounts[item.betAmounts.length - 1]}`} />
                                         <p className='slot-id'>{item.machine.id}</p>
                                         <p className='slot-bet-range'>Bet range: {item.betAmounts[0]}-{item.betAmounts[item.betAmounts.length - 1]}</p>
                                         <p className='slot-name'>{item.machine.name}</p>

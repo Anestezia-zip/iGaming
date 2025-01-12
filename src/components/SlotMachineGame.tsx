@@ -57,12 +57,6 @@ const SlotMachineGame = () => {
         const spinResult = slotMachineInstance.spin();
         // Update the balance
         const newBalance = userBalance + spinResult;
-
-        // Check that the balance does not turn negative
-        if (newBalance < 0) {
-            setResultMessage('You cannot bet more than your balance');
-            return;
-        }
         setUserBalance(newBalance);
 
         // Send a new balance in the first iframe
@@ -99,8 +93,9 @@ const SlotMachineGame = () => {
                             src="/src/assets/slot-machine-175.webm"
                             className='max-[460px]:w-[100%] w-[70%]'
                             muted
+                            aria-label="Slot machine spinning animation"
                         />
-                        <div className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
+                        <div aria-live="assertive" className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
                             {resultMessage}
                         </div>
                     </div>
@@ -113,6 +108,7 @@ const SlotMachineGame = () => {
                                 <Button
                                     key={i}
                                     onClick={() => setCurrentBet(bet)}
+                                    onKeyDown={(e) => e.key === 'Enter' && setCurrentBet(bet)}
                                     containerClassName={clsx('mb-8 max-[695px]:mb-4 rounded-14', currentBet === bet ? '!g2' : '')}
                                     size={clsx('py-3 px-4 max-[695px]:py-2 px-2')}
                                     textBtn=''
@@ -129,7 +125,7 @@ const SlotMachineGame = () => {
                         </Button>
 
                         {/* Message about result of spin */}
-                        {resultMessage && <div className={clsx('caption !leading-7 text-2xl mt-10 max-[570px]:hidden')}>{resultMessage}</div>}
+                        {resultMessage && <div aria-live="assertive" className={clsx('caption !leading-7 text-2xl mt-10 max-[570px]:hidden')}>{resultMessage}</div>}
                     </div>
                 </div>
             ) : (

@@ -7,6 +7,7 @@ type ButtonProps = {
     href?: string;
     containerClassName?: string;
     onClick?: () => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
     disabled?: boolean;
     size?: string;
     textBtn?: string;
@@ -14,7 +15,7 @@ type ButtonProps = {
 };
 
 
-const Button: FC<ButtonProps> = ({ icon, children, href, containerClassName, onClick, disabled, size = 'h-[60px] px-12 g4', textBtn = 'text-p1', hoverBg }) => {
+const Button: FC<ButtonProps> = ({ icon, children, href, containerClassName, onClick, onKeyDown, disabled, size = 'h-[60px] px-12 g4', textBtn = 'text-p1', hoverBg }) => {
     const Inner = () => (
         <span className={clsx('relative flex items-center justify-center rounded-2xl overflow-hidden', size, disabled && 'mix-blend-exclusion', hoverBg && 'bg-gradient-hover group-hover:before:opacity-100')}>
             {icon && (<img src={icon} alt="icon" className='size-10 mr-5 object-contain z-10' />)}
@@ -27,7 +28,7 @@ const Button: FC<ButtonProps> = ({ icon, children, href, containerClassName, onC
             <Inner />
         </a>
     ) : (
-        <button className={clsx('relative p-0.5 g6 rounded-2xl shadow-300 group', containerClassName)} onClick={onClick} disabled={disabled}>
+        <button className={clsx('relative p-0.5 g6 rounded-2xl shadow-300 group', containerClassName)} onClick={onClick} onKeyDown={onKeyDown} disabled={disabled}>
             <Inner />
         </button>
     )
