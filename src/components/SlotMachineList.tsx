@@ -37,7 +37,7 @@ const SlotMachineList = () => {
             } finally {
                 setTimeout(() => {
                     setLoading(false); // simulate a long data load
-                }, 1100);
+                }, 1000);
             }
         };
 
