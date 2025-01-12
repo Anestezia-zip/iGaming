@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { SlotMachine, SlotMachineInterface } from '../classes/SlotMachine';
 import { mockSlotMachineData } from '../constants/index';
 
+type SlotMachineData = {
+    machine: SlotMachineInterface;
+    betAmounts: number[];
+};
+
 const SlotMachineList = () => {
-    const [slotMachines, setSlotMachines] = useState<{
-        machine: SlotMachineInterface;
-        betAmounts: number[];
-    }[]>([]);
-    const [selectedSlotMachine, setSelectedSlotMachine] = useState<{
-        machine: SlotMachineInterface;
-        betAmounts: number[]
-    } | null>(null);
+    const [slotMachines, setSlotMachines] = useState<SlotMachineData[]>([]);
+    const [selectedSlotMachine, setSelectedSlotMachine] = useState<SlotMachineData | null>(null);
     const [userBalance, setUserBalance] = useState(100); 
 
     useEffect(() => {
@@ -30,7 +29,15 @@ const SlotMachineList = () => {
         fetchSlotMachines();
     }, []);
     
-
+    const handleSelectMachine = (machine: SlotMachineData) => {
+        setSelectedSlotMachine(machine);
+        const gameData = {
+            id: machine.machine.id,
+            name: machine.machine.name,
+            betAmounts: machine.betAmounts,
+        }
+        window.postMessage({ type: 'SELECT_MACHINE', data: gameData }, '*');
+    };
 
     return (
         <div className='flex flex-col gap-4 p-2'>
@@ -38,7 +45,7 @@ const SlotMachineList = () => {
                 {slotMachines.map((item) => (
                     <div
                         key={item.machine.id}
-                        // onClick={() => handleSelectMachine(item)}
+                        onClick={() => handleSelectMachine(item)}
                         className='relative'
                     >
                         <img src="/src/assets/slot.png" width={200} className='cursor-pointer' alt={item.machine.name} />
