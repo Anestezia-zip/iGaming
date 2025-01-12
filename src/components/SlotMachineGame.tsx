@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Button from './Button';
 import clsx from 'clsx';
+import { SlotMachine } from '../classes/SlotMachine';
 
 interface SlotMachineData {
     id: number;
@@ -17,7 +18,6 @@ const SlotMachineGame = () => {
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
-
     useEffect(() => {
         // Waiting for data on the selected machine
         const handleMessage = (event: MessageEvent) => {
@@ -33,16 +33,17 @@ const SlotMachineGame = () => {
     }, []);
 
     const handleSpin = () => {
-          if (currentBet! > userBalance) {
+        if (currentBet! > userBalance) {
             setResultMessage('Insufficient balance for this bet');
             return;
-          }
-          if (!selectedMachine) {
+        }
+        if (!selectedMachine) {
             setResultMessage('No slot machine selected');
             return;
-          }
+        }
 
-        setIsSpinning(true);  // Video of spinning slot
+        // Set the video playing of spinning slot
+        setIsSpinning(true);
         if (videoRef.current) {
             videoRef.current.playbackRate = 1.75;
             videoRef.current.play().catch((error) => {
@@ -50,9 +51,34 @@ const SlotMachineGame = () => {
             });
         }
 
+        // Set the current rate through the class method. Call spin() to get the result
+        const slotMachineInstance = new SlotMachine(selectedMachine.id, selectedMachine.name);
+        slotMachineInstance.placeBet(currentBet!);
+        const spinResult = slotMachineInstance.spin();
+        // Update the balance
+        const newBalance = userBalance + spinResult;
+
+        // Check that the balance does not turn negative
+        if (newBalance < 0) {
+            setResultMessage('You cannot bet more than your balance');
+            return;
+        }
+        setUserBalance(newBalance);
+
+        // Send a new balance in the first iframe
+        window.postMessage({ type: 'UPDATE_BALANCE', balance: newBalance }, '*');
+
+        // Notify the user of the result
+        setResultMessage(
+            spinResult > 0
+                ? `You won $${spinResult}!`
+                : `You lost $${Math.abs(spinResult)}.`
+        );
+
+        //  After the video is finished, restore the state
         if (videoRef.current) {
             videoRef.current.onended = () => {
-                setIsSpinning(false); //  After the video is finished, restore the state
+                setIsSpinning(false);
             };
         }
     }
