@@ -44,6 +44,24 @@ const SlotMachineList = () => {
         fetchSlotMachines();
     }, []);
 
+    // Update the user's balance
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data.type === 'UPDATE_BALANCE') {
+                const { balance } = event.data;
+                if (typeof balance === 'number' && !isNaN(balance)) {
+                    setUserBalance(balance);
+                } else {
+                    console.error('Invalid balance data received:', balance);
+                    setError('Received invalid balance data.');
+                }
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
+
     const handleSelectMachine = ({ machine, betAmounts }: SlotMachineData) => {
         setSelectedSlotMachine({ machine, betAmounts });
         const gameData = {
