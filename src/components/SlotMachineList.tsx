@@ -29,12 +29,12 @@ const SlotMachineList = () => {
         fetchSlotMachines();
     }, []);
     
-    const handleSelectMachine = (machine: SlotMachineData) => {
-        setSelectedSlotMachine(machine);
+    const handleSelectMachine = ({machine, betAmounts}: SlotMachineData) => {
+        setSelectedSlotMachine({machine, betAmounts});
         const gameData = {
-            id: machine.machine.id,
-            name: machine.machine.name,
-            betAmounts: machine.betAmounts,
+            id: machine.id,
+            name: machine.name,
+            betAmounts,
         }
         window.postMessage({ type: 'SELECT_MACHINE', data: gameData }, '*');
     };
