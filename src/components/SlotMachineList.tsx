@@ -116,7 +116,7 @@ const SlotMachineList = () => {
                                         onKeyDown={(e) => e.key === 'Enter' && handleSelectMachine(item)}
                                         className='relative'
                                     >
-                                        <img src="/src/assets/slot.png" width={200} className='cursor-pointer' alt={`Slot machine: ${item.machine.name}, Bet range: ${item.betAmounts[0]}-${item.betAmounts[item.betAmounts.length - 1]}`} />
+                                        <img src="/assets/slot.png" width={200} className='cursor-pointer' alt={`Slot machine: ${item.machine.name}, Bet range: ${item.betAmounts[0]}-${item.betAmounts[item.betAmounts.length - 1]}`} />
                                         <p className='slot-id'>{item.machine.id}</p>
                                         <p className='slot-bet-range'>Bet range: {item.betAmounts[0]}-{item.betAmounts[item.betAmounts.length - 1]}</p>
                                         <p className='slot-name'>{item.machine.name}</p>

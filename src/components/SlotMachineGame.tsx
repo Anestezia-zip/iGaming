@@ -90,7 +90,7 @@ const SlotMachineGame = () => {
                         </p>
                         <video
                             ref={videoRef}
-                            src="/src/assets/slot-machine-175.webm"
+                            src="/assets/slot-machine-175.webm"
                             className='max-[460px]:w-[100%] w-[70%]'
                             muted
                             aria-label="Slot machine spinning animation"
