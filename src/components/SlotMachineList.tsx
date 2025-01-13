@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SlotMachine, SlotMachineInterface } from '../classes/SlotMachine';
 import { mockSlotMachineData } from '../constants/index';
 
@@ -37,7 +37,7 @@ const SlotMachineList = () => {
             } finally {
                 setTimeout(() => {
                     setLoading(false); // simulate a long data load
-                }, 1000);
+                }, 100);
             }
         };
 
