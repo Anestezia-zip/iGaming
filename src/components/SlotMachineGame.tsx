@@ -96,7 +96,7 @@ const SlotMachineGame = () => {
                         </p>
                         <video
                             ref={videoRef}
-                            className='max-[460px]:w-[100px] w-[150px] mt-4 max-[460px]:mt-2 h-auto object-contain'
+                            className='max-[460px]:w-[100px] w-[150px] mt-4 max-[460px]:mt-2 h-auto object-contain transition-all duration-300'
                             muted
                             playsInline
                             preload="auto"
