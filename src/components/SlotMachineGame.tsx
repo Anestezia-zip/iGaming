@@ -52,12 +52,6 @@ const SlotMachineGame = () => {
 
         // Set the video playing of spinning slot
         setIsSpinning(true);
-        if (videoRef.current) {
-            videoRef.current.playbackRate = 1.75;
-            videoRef.current.play().catch((error) => {
-                console.error("Error playing video: ", error);
-            });
-        }
 
         // Set the current rate through the class method. Call spin() to get the result
         const slotMachineInstance = new SlotMachine(selectedMachine.id, selectedMachine.name);
@@ -78,6 +72,7 @@ const SlotMachineGame = () => {
         );
 
         if (videoRef.current) {
+            videoRef.current.playbackRate = 2;
             videoRef.current.play().then(() => {
             }).catch((error) => {
                 console.error("Error playing video: ", error);
@@ -94,8 +89,6 @@ const SlotMachineGame = () => {
                 setIsSpinning(false); // Unlock button on video error
             };
         }
-        
-        
     }
 
 
