@@ -32,6 +32,14 @@ const SlotMachineGame = () => {
         return () => window.removeEventListener('message', handleMessage);
     }, []);
 
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch((error) => {
+                console.error("Error trying to autoplay video:", error);
+            });
+        }
+    }, []);    
+
     const handleSpin = () => {
         if (currentBet! > userBalance) {
             setResultMessage('Insufficient balance for this bet');
@@ -71,16 +79,14 @@ const SlotMachineGame = () => {
 
         if (videoRef.current) {
             videoRef.current.play().then(() => {
-                console.log("Video started playing successfully.");
             }).catch((error) => {
                 console.error("Error playing video: ", error);
-                setIsSpinning(false); //  Unlocking the button in case of an error
+                setIsSpinning(false); //  Unlock button in case of an error
             });
         
             // Guarantee a state reset even if the video did not complete correctly
             videoRef.current.onended = () => {
-                console.log("Video ended.");
-                setIsSpinning(false); // Разблокировка кнопки после завершения
+                setIsSpinning(false); // Unlock button on video ended
             };
         
             videoRef.current.onerror = () => {
