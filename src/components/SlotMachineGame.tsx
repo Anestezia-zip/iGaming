@@ -108,10 +108,11 @@ const SlotMachineGame = () => {
                             className='max-[460px]:w-[100%] w-[70%]'
                             muted
                             playsInline
+                            preload="auto"
                             aria-label="Slot machine spinning animation"
                         >
                             <source src="/assets/slot-machine-175.webm" type="video/webm" />
-                            <source src="/assets/slot-machine-175.mp4" type="video/mp4" />
+                            <source src="/assets/slot-machine-1.mp4" type="video/mp4" />
                             Your browser does not support video with transparency.
                         </video>
                         <div aria-live="assertive" className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
