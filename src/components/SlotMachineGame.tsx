@@ -30,15 +30,7 @@ const SlotMachineGame = () => {
 
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
-    }, []);
-
-    useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch((error) => {
-                console.error("Error trying to autoplay video:", error);
-            });
-        }
-    }, []);    
+    }, []);  
 
     const handleSpin = () => {
         if (currentBet! > userBalance) {
@@ -104,10 +96,11 @@ const SlotMachineGame = () => {
                         </p>
                         <video
                             ref={videoRef}
-                            className='max-[460px]:w-[100%] w-[70%]'
+                            className='max-[460px]:w-[100px] w-[150px] mt-4 max-[460px]:mt-2 h-auto object-contain'
                             muted
                             playsInline
                             preload="auto"
+                            poster="/assets/slot-machine.png"
                             aria-label="Slot machine spinning animation"
                         >
                             <source src="/assets/slot-machine-175.webm" type="video/webm" />
