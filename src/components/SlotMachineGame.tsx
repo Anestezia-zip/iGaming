@@ -69,12 +69,27 @@ const SlotMachineGame = () => {
                 : `You lost $${Math.abs(spinResult)}.`
         );
 
-        //  After the video is finished, restore the state
         if (videoRef.current) {
+            videoRef.current.play().then(() => {
+                console.log("Video started playing successfully.");
+            }).catch((error) => {
+                console.error("Error playing video: ", error);
+                setIsSpinning(false); //  Unlocking the button in case of an error
+            });
+        
+            // Guarantee a state reset even if the video did not complete correctly
             videoRef.current.onended = () => {
-                setIsSpinning(false);
+                console.log("Video ended.");
+                setIsSpinning(false); // Разблокировка кнопки после завершения
+            };
+        
+            videoRef.current.onerror = () => {
+                console.error("Video playback encountered an error.");
+                setIsSpinning(false); // Unlock button on video error
             };
         }
+        
+        
     }
 
 
@@ -90,11 +105,15 @@ const SlotMachineGame = () => {
                         </p>
                         <video
                             ref={videoRef}
-                            src="/assets/slot-machine-175.webm"
                             className='max-[460px]:w-[100%] w-[70%]'
                             muted
+                            playsInline
                             aria-label="Slot machine spinning animation"
-                        />
+                        >
+                            <source src="/assets/slot-machine-175.webm" type="video/webm" />
+                            <source src="/assets/slot-machine-175.mp4" type="video/mp4" />
+                            Your browser does not support video with transparency.
+                        </video>
                         <div aria-live="assertive" className={clsx('caption !leading-7 text-base max-w-44 mx-auto mt-10 hidden max-[570px]:block')}>
                             {resultMessage}
                         </div>
